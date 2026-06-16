@@ -300,18 +300,20 @@
 		.grid-section {
 			padding: 20px 28px 24px;
 			overflow-x: auto;
+			--column-widths:  0.02fr 0.25fr 0.22fr 0.2fr 0.3fr 0.3fr 0.3fr 0.2fr 0.35fr 0.3fr 0.2fr;
 		}
 
 		/* Column headers */
 		.grid-head {
 			display: grid;
-			grid-template-columns: 32px 140px 110px 100px 88px 88px 88px 52px 1fr 52px 52px;
+			grid-template-columns: var(--column-widths);
 			gap: 6px;
 			padding: 8px 14px;
 			background: rgba(29, 158, 117, 0.06);
 			border-radius: var(--radius-sm);
 			margin-bottom: 8px;
 			min-width: 900px;
+			padding-left: 25px;
 		}
 
 		.col-head {
@@ -334,7 +336,7 @@
 
 		.log-row {
 			display: grid;
-			grid-template-columns: 32px 140px 110px 100px 88px 88px 88px 52px 1fr 52px 52px;
+			grid-template-columns: var(--column-widths);
 			gap: 6px;
 			align-items: center;
 			background: var(--row-hover);
@@ -806,7 +808,6 @@
 			border-radius: 10px;
 		}
 	</style>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
 </head>
 
 <body>
@@ -1418,7 +1419,7 @@
 					});
 					const result = await response.json();
 
-					if (result?.success) {
+					if (response.data?.success) {
 						successCount++;
 						document.getElementById('saveStatus').textContent = `Saving ${successCount} / ${validLogs.length}…`;
 						// Animate row out then remove
@@ -1427,7 +1428,7 @@
 						row.style.transform = 'translateX(20px)';
 						setTimeout(() => { row.remove(); updateAll(); }, 300);
 					} else {
-						const errMsg = result?.error || 'Server rejected this log';
+						const errMsg = response.data?.error || 'Server rejected this log';
 						valCell.innerHTML = `<span class="val-err" title="${errMsg}">${errMsg}</span>`;
 					}
 				} catch (err) {
