@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>KTT Work Log · Bulk Entry</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
 	<link
 		href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
 		rel="stylesheet">
@@ -58,7 +59,6 @@
 			padding: 24px 16px 48px;
 		}
 
-		/* Floating orbs */
 		body::before,
 		body::after {
 			content: '';
@@ -93,7 +93,6 @@
 			z-index: 1;
 		}
 
-		/* ── GLASS CARD ── */
 		.glass {
 			background: var(--glass-bg);
 			border: 1px solid var(--glass-border);
@@ -103,7 +102,260 @@
 			border-radius: var(--radius);
 		}
 
-		/* ── HEADER ── */
+		/* ─────────────────────────────────────────
+		   TOKEN SCREEN
+		───────────────────────────────────────── */
+		#tokenScreen {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height: calc(100vh - 48px);
+		}
+
+		.token-card {
+			width: 100%;
+			max-width: 480px;
+			padding: 44px 40px 40px;
+			background: var(--glass-bg);
+			border: 1px solid var(--glass-border);
+			backdrop-filter: var(--glass-blur);
+			-webkit-backdrop-filter: var(--glass-blur);
+			box-shadow: var(--glass-shadow);
+			border-radius: var(--radius);
+			display: flex;
+			flex-direction: column;
+			gap: 24px;
+		}
+
+		.token-brand {
+			display: flex;
+			align-items: center;
+			gap: 14px;
+		}
+
+		.logo-dot {
+			width: 44px;
+			height: 44px;
+			border-radius: 12px;
+			background: linear-gradient(135deg, var(--teal-mid), #0F6E56);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-size: 17px;
+			font-weight: 700;
+			letter-spacing: -0.5px;
+			box-shadow: 0 4px 14px rgba(29, 158, 117, 0.35);
+			flex-shrink: 0;
+		}
+
+		.token-brand-text h1 {
+			font-size: 19px;
+			font-weight: 700;
+			letter-spacing: -0.4px;
+			color: var(--text-primary);
+		}
+
+		.token-brand-text p {
+			font-size: 12px;
+			color: var(--text-secondary);
+			margin-top: 2px;
+		}
+
+		.token-divider {
+			height: 1px;
+			background: var(--border);
+		}
+
+		.token-body h2 {
+			font-size: 16px;
+			font-weight: 600;
+			color: var(--text-primary);
+			margin-bottom: 6px;
+		}
+
+		.token-body p {
+			font-size: 13px;
+			color: var(--text-secondary);
+			line-height: 1.6;
+		}
+
+		.token-field-wrap {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+
+		.token-field-label {
+			font-size: 12px;
+			font-weight: 600;
+			color: var(--text-secondary);
+			letter-spacing: 0.4px;
+			text-transform: uppercase;
+		}
+
+		.token-field-input-row {
+			display: flex;
+			gap: 8px;
+		}
+
+		.token-input {
+			flex: 1;
+			height: 42px;
+			background: rgba(255, 255, 255, 0.7);
+			border: 1.5px solid var(--border);
+			border-radius: var(--radius-sm);
+			padding: 0 12px;
+			font-family: var(--mono);
+			font-size: 12px;
+			color: var(--text-primary);
+			outline: none;
+			transition: all 0.15s;
+		}
+
+		.token-input:focus {
+			border-color: var(--border-focus);
+			background: white;
+			box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.1);
+		}
+
+		.token-input::placeholder {
+			color: var(--text-muted);
+			font-family: var(--font);
+			font-size: 13px;
+		}
+
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 7px;
+			padding: 8px 16px;
+			border-radius: var(--radius-sm);
+			font-family: var(--font);
+			font-size: 13px;
+			font-weight: 500;
+			cursor: pointer;
+			border: none;
+			transition: all 0.18s ease;
+			white-space: nowrap;
+		}
+
+		.btn-teal {
+			background: linear-gradient(135deg, var(--teal-mid), var(--teal));
+			color: white;
+			box-shadow: 0 4px 14px rgba(29, 158, 117, 0.3);
+			height: 42px;
+		}
+
+		.btn-teal:hover {
+			box-shadow: 0 6px 18px rgba(29, 158, 117, 0.42);
+			transform: translateY(-1px);
+		}
+
+		.btn-teal:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+			transform: none;
+		}
+
+		.btn-ghost {
+			background: rgba(255, 255, 255, 0.55);
+			color: var(--text-secondary);
+			border: 1px solid var(--border);
+		}
+
+		.btn-ghost:hover {
+			background: rgba(255, 255, 255, 0.88);
+			color: var(--text-primary);
+			border-color: var(--border-focus);
+		}
+
+		.btn-amber {
+			background: rgba(250, 238, 218, 0.8);
+			color: var(--amber);
+			border: 1px solid rgba(186, 117, 23, 0.22);
+		}
+
+		.btn-amber:hover {
+			background: rgba(250, 238, 218, 1);
+		}
+
+		.token-error {
+			display: none;
+			align-items: center;
+			gap: 8px;
+			padding: 10px 14px;
+			background: rgba(226, 75, 74, 0.08);
+			border: 1px solid rgba(226, 75, 74, 0.2);
+			border-radius: var(--radius-sm);
+			font-size: 12.5px;
+			color: var(--danger);
+		}
+
+		.token-error.show {
+			display: flex;
+		}
+
+		.token-hint {
+			padding: 12px 14px;
+			background: rgba(29, 158, 117, 0.06);
+			border: 1px solid rgba(29, 158, 117, 0.15);
+			border-radius: var(--radius-sm);
+			font-size: 12px;
+			color: var(--text-secondary);
+			line-height: 1.6;
+		}
+
+		.token-hint strong {
+			color: var(--teal);
+		}
+
+		.token-saved-info {
+			display: none;
+			align-items: center;
+			gap: 10px;
+			padding: 10px 14px;
+			background: rgba(29, 158, 117, 0.08);
+			border: 1px solid rgba(29, 158, 117, 0.2);
+			border-radius: var(--radius-sm);
+			font-size: 12.5px;
+			color: var(--teal);
+		}
+
+		.token-saved-info.show {
+			display: flex;
+		}
+
+		.token-saved-preview {
+			font-family: var(--mono);
+			font-size: 11px;
+			background: rgba(255, 255, 255, 0.6);
+			border-radius: 4px;
+			padding: 2px 7px;
+			color: var(--text-secondary);
+			max-width: 200px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.token-actions {
+			display: flex;
+			gap: 8px;
+		}
+
+		.token-actions .btn-teal {
+			flex: 1;
+			justify-content: center;
+		}
+
+		/* ─────────────────────────────────────────
+		   MAIN APP
+		───────────────────────────────────────── */
+		#appScreen {
+			display: none;
+		}
+
 		.header {
 			padding: 22px 28px 18px;
 			border-bottom: 1px solid var(--border);
@@ -120,21 +372,6 @@
 			display: flex;
 			align-items: center;
 			gap: 14px;
-		}
-
-		.logo-dot {
-			width: 38px;
-			height: 38px;
-			border-radius: 10px;
-			background: linear-gradient(135deg, var(--teal-mid), #0F6E56);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: white;
-			font-size: 16px;
-			font-weight: 700;
-			letter-spacing: -0.5px;
-			box-shadow: 0 4px 12px rgba(29, 158, 117, 0.35);
 		}
 
 		.header-title {
@@ -182,7 +419,6 @@
 			background: var(--teal-mid);
 		}
 
-		/* ── TOOLBAR ── */
 		.toolbar {
 			padding: 14px 28px;
 			border-bottom: 1px solid var(--border);
@@ -230,56 +466,8 @@
 			flex: 1;
 		}
 
-		.btn {
-			display: inline-flex;
-			align-items: center;
-			gap: 7px;
-			padding: 8px 15px;
-			border-radius: var(--radius-sm);
-			font-family: var(--font);
-			font-size: 13px;
-			font-weight: 500;
-			cursor: pointer;
-			border: none;
-			transition: all 0.18s ease;
-			white-space: nowrap;
-		}
-
 		.btn svg {
 			flex-shrink: 0;
-		}
-
-		.btn-ghost {
-			background: rgba(255, 255, 255, 0.55);
-			color: var(--text-secondary);
-			border: 1px solid var(--border);
-		}
-
-		.btn-ghost:hover {
-			background: rgba(255, 255, 255, 0.88);
-			color: var(--text-primary);
-			border-color: var(--border-focus);
-		}
-
-		.btn-teal {
-			background: linear-gradient(135deg, var(--teal-mid), var(--teal));
-			color: white;
-			box-shadow: 0 4px 14px rgba(29, 158, 117, 0.3);
-		}
-
-		.btn-teal:hover {
-			box-shadow: 0 6px 18px rgba(29, 158, 117, 0.42);
-			transform: translateY(-1px);
-		}
-
-		.btn-amber {
-			background: rgba(250, 238, 218, 0.8);
-			color: var(--amber);
-			border: 1px solid rgba(186, 117, 23, 0.22);
-		}
-
-		.btn-amber:hover {
-			background: rgba(250, 238, 218, 1);
 		}
 
 		.drag-mode-active .btn-drag {
@@ -288,7 +476,6 @@
 			border-color: var(--border-focus);
 		}
 
-		/* ── LAYOUT ── */
 		.body-layout {
 			display: grid;
 			grid-template-columns: 1fr 260px;
@@ -296,22 +483,20 @@
 			min-height: 0;
 		}
 
-		/* ── GRID ── */
 		.grid-section {
 			padding: 20px 28px 24px;
 			overflow-x: auto;
 		}
 
-		/* Column headers */
 		.grid-head {
 			display: grid;
-			grid-template-columns: 32px 140px 110px 100px 88px 88px 88px 52px 1fr 52px 52px;
+			grid-template-columns: 32px 140px 110px 100px 128px 128px 88px 52px 1fr 52px 52px;
 			gap: 6px;
 			padding: 8px 14px;
 			background: rgba(29, 158, 117, 0.06);
 			border-radius: var(--radius-sm);
 			margin-bottom: 8px;
-			min-width: 900px;
+			min-width: 980px;
 		}
 
 		.col-head {
@@ -324,17 +509,16 @@
 			align-items: center;
 		}
 
-		/* Log rows */
 		.log-rows {
 			display: flex;
 			flex-direction: column;
 			gap: 6px;
-			min-width: 900px;
+			min-width: 980px;
 		}
 
 		.log-row {
 			display: grid;
-			grid-template-columns: 32px 140px 110px 100px 88px 88px 88px 52px 1fr 52px 52px;
+			grid-template-columns: 32px 140px 110px 100px 128px 128px 88px 52px 1fr 52px 52px;
 			gap: 6px;
 			align-items: center;
 			background: var(--row-hover);
@@ -379,19 +563,6 @@
 			}
 		}
 
-		@keyframes rowOut {
-			from {
-				opacity: 1;
-				transform: scaleY(1);
-			}
-
-			to {
-				opacity: 0;
-				transform: scaleY(0);
-			}
-		}
-
-		/* Drag handle */
 		.drag-handle {
 			display: flex;
 			align-items: center;
@@ -411,7 +582,6 @@
 			cursor: grabbing;
 		}
 
-		/* Inputs inside row */
 		.cell-input {
 			width: 100%;
 			height: 34px;
@@ -440,25 +610,13 @@
 			font-family: var(--mono);
 			font-size: 12px;
 			padding: 0 6px;
+			max-width: 107px;
 		}
 
-		.ampm-badge {
-			font-family: var(--mono);
-			font-size: 10px;
-			font-weight: 600;
-			padding: 2px 5px;
-			border-radius: 4px;
-			white-space: nowrap;
-			background: rgba(29, 158, 117, 0.10);
-			color: var(--teal);
-			min-width: 26px;
-			text-align: center;
-			transition: background 0.15s, color 0.15s;
-		}
-
-		.ampm-badge.pm {
-			background: rgba(186, 117, 23, 0.12);
-			color: var(--amber);
+		.time-cell {
+			display: flex;
+			align-items: center;
+			gap: 5px;
 		}
 
 		.duration-badge {
@@ -594,14 +752,13 @@
 			color: var(--teal);
 		}
 
-		/* Action cell spans 2 cols */
 		.action-cell {
 			display: flex;
 			gap: 3px;
 			align-items: center;
 		}
 
-		/* ── SIDEBAR ── */
+		/* Sidebar */
 		.sidebar {
 			border-left: 1px solid var(--border);
 			padding: 24px 20px;
@@ -714,7 +871,55 @@
 			gap: 8px;
 		}
 
-		/* ── FOOTER ── */
+		/* Token chip in sidebar */
+		.token-info-chip {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
+			background: rgba(255, 255, 255, 0.5);
+			border: 1px solid var(--border);
+			border-radius: var(--radius-sm);
+			padding: 8px 12px;
+		}
+
+		.token-info-chip-left {
+			font-size: 11px;
+			color: var(--text-secondary);
+		}
+
+		.token-info-chip-left strong {
+			display: block;
+			font-size: 10px;
+			color: var(--text-muted);
+			font-weight: 600;
+			text-transform: uppercase;
+			margin-bottom: 2px;
+		}
+
+		.token-info-chip-left span {
+			font-family: var(--mono);
+			font-size: 11px;
+			color: var(--teal);
+		}
+
+		.token-reset-btn {
+			font-size: 11px;
+			color: var(--danger);
+			background: none;
+			border: none;
+			cursor: pointer;
+			padding: 3px 7px;
+			border-radius: 4px;
+			font-family: var(--font);
+			transition: background 0.15s;
+			white-space: nowrap;
+		}
+
+		.token-reset-btn:hover {
+			background: rgba(226, 75, 74, 0.08);
+		}
+
 		.footer {
 			border-top: 1px solid var(--border);
 			padding: 14px 28px;
@@ -735,7 +940,6 @@
 			gap: 6px;
 		}
 
-		/* ── DRAG MODE INDICATOR ── */
 		.drag-hint {
 			text-align: center;
 			padding: 6px;
@@ -791,7 +995,6 @@
 			border-left: 3px solid var(--danger);
 		}
 
-		/* Scrollbar */
 		::-webkit-scrollbar {
 			width: 5px;
 			height: 5px;
@@ -806,143 +1009,338 @@
 			border-radius: 10px;
 		}
 	</style>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
 </head>
 
 <body>
-
 	<div class="wrapper">
-		<div class="glass" id="mainCard">
 
-			<!-- HEADER -->
-			<div class="header">
-				<div class="header-left">
+		<!-- ══════════════════════════════════════════
+	     TOKEN SCREEN
+	══════════════════════════════════════════ -->
+		<div id="tokenScreen">
+			<div class="token-card">
+				<div class="token-brand">
 					<div class="logo-dot">KT</div>
-					<div>
-						<div class="header-title">Bulk Work Log Entry</div>
-						<div class="header-sub">KTT Analytics · IT Department</div>
+					<div class="token-brand-text">
+						<h1>KTT Work Log</h1>
+						<p>KTT Analytics · IT Department</p>
 					</div>
 				</div>
-				<div class="header-meta" id="headerMeta">
-					<div class="meta-chip"><span class="dot"></span>Date: <strong id="metaDate">—</strong></div>
-					<div class="meta-chip">Entries: <strong id="metaCount">0</strong></div>
-					<div class="meta-chip">Total: <strong id="metaTotal">0h 0m</strong></div>
-				</div>
-			</div>
 
-			<!-- TOOLBAR -->
-			<div class="toolbar" id="toolbar">
-				<div class="date-group">
-					<label>📅 Date</label>
-					<input type="date" id="globalDate">
+				<div class="token-divider"></div>
+
+				<div class="token-body">
+					<h2>Session Token Required</h2>
+					<p>Paste your <strong>X-AT-SessionToken</strong> to authenticate. It will be stored in your browser
+						and reused automatically next time.</p>
 				</div>
 
-				<div class="spacer"></div>
-
-				<button class="btn btn-ghost btn-drag" id="btnDragMode" onclick="toggleDragMode()">
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20" />
-					</svg>
-					Reorder Mode
-				</button>
-
-				<button class="btn btn-ghost" onclick="bulkPaste()">
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
-						<rect x="9" y="3" width="6" height="4" rx="1" />
-					</svg>
-					Bulk Paste
-				</button>
-
-				<button class="btn btn-amber" onclick="addRow()">
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<line x1="12" y1="5" x2="12" y2="19" />
-						<line x1="5" y1="12" x2="19" y2="12" />
-					</svg>
-					Add Entry
-				</button>
-
-				<button class="btn btn-teal" onclick="submitAll()">
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<polyline points="20 6 9 17 4 12" />
-					</svg>
-					Save Logs
-				</button>
-			</div>
-
-			<!-- BODY -->
-			<div class="body-layout">
-
-				<!-- GRID -->
-				<div class="grid-section">
-					<div class="drag-hint" id="dragHint">⠿ Drag the handle to reorder entries · Times recalculate
-						automatically
-					</div>
-					<div class="grid-head">
-						<div class="col-head"></div>
-						<div class="col-head">Activity</div>
-						<div class="col-head">Request ID</div>
-						<div class="col-head">Ticket</div>
-						<div class="col-head">Start</div>
-						<div class="col-head">End</div>
-						<div class="col-head">Duration</div>
-						<div class="col-head">Fixed</div>
-						<div class="col-head">Notes</div>
-						<div class="col-head">Status</div>
-						<div class="col-head"></div>
-					</div>
-					<div class="log-rows" id="logRows"></div>
+				<div id="tokenSavedInfo" class="token-saved-info">
+					✓ Token already saved &nbsp;
+					<span class="token-saved-preview" id="tokenSavedPreview"></span>
 				</div>
 
-				<!-- SIDEBAR -->
-				<div class="sidebar">
-					<div class="sidebar-title">Summary</div>
+				<div class="token-field-wrap">
+					<div class="token-field-label">Session Token (JWT)</div>
+					<div class="token-field-input-row">
+						<input type="text" class="token-input" id="tokenInput"
+							placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…">
+						<button class="btn btn-teal" id="tokenSaveBtn" onclick="saveToken()">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2">
+								<polyline points="20 6 9 17 4 12" />
+							</svg>
+							Save
+						</button>
+					</div>
+				</div>
 
-					<div class="stat-card">
-						<div class="stat-label">Total Logged</div>
-						<div class="stat-value teal" id="sbTotal">0h 0m</div>
-					</div>
+				<div class="token-error" id="tokenError">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="12" cy="12" r="10" />
+						<line x1="12" y1="8" x2="12" y2="12" />
+						<line x1="12" y1="16" x2="12.01" y2="16" />
+					</svg>
+					<span id="tokenErrorMsg">Please paste a valid token before continuing.</span>
+				</div>
 
-					<div class="stat-row">
-						<span class="stat-row-label">Entries</span>
-						<span class="stat-row-value" id="sbCount">0</span>
-					</div>
-					<div class="stat-row">
-						<span class="stat-row-label">First Start</span>
-						<span class="stat-row-value" id="sbFirst">—</span>
-					</div>
-					<div class="stat-row">
-						<span class="stat-row-label">Last End</span>
-						<span class="stat-row-value" id="sbLast">—</span>
-					</div>
+				<div class="token-hint">
+					<strong>Where to find your token?</strong><br>
+					Open the CRM → Browser DevTools (F12) → Application → Local Storage or any API request headers →
+					copy the value of <code>X-AT-SessionToken</code>.
+				</div>
 
-					<div id="sbGap" class="gap-badge" style="display:none">
-						⚠ <span id="sbGapText">Gap detected</span>
-					</div>
-
-					<div class="sidebar-title" style="margin-top:4px">Validation</div>
-					<div id="sbValidation" class="val-badge ok"><span class="dot6"></span>All good</div>
+				<div class="token-actions">
+					<button class="btn btn-teal" onclick="proceedToApp()">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-width="2">
+							<path d="M5 12h14M12 5l7 7-7 7" />
+						</svg>
+						Continue to Work Log
+					</button>
 				</div>
 			</div>
-
-			<!-- FOOTER -->
-			<div class="footer">
-				<div class="save-status" id="saveStatus">Ready to save</div>
-				<button class="btn btn-ghost" onclick="clearAll()">Clear All</button>
-				<button class="btn btn-teal" onclick="submitAll()">
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<polyline points="20 6 9 17 4 12" />
-					</svg>
-					Save All Logs
-				</button>
-			</div>
-
 		</div>
+
+		<!-- ══════════════════════════════════════════
+	     MAIN APP
+	══════════════════════════════════════════ -->
+		<div id="appScreen">
+			<div class="glass" id="mainCard">
+
+				<!-- HEADER -->
+				<div class="header">
+					<div class="header-left">
+						<div class="logo-dot">KT</div>
+						<div>
+							<div class="header-title">Bulk Work Log Entry</div>
+							<div class="header-sub">KTT Analytics · IT Department</div>
+						</div>
+					</div>
+					<div class="header-meta" id="headerMeta">
+						<div class="meta-chip"><span class="dot"></span>Date: <strong id="metaDate">—</strong></div>
+						<div class="meta-chip">Entries: <strong id="metaCount">0</strong></div>
+						<div class="meta-chip">Total: <strong id="metaTotal">0h 0m</strong></div>
+					</div>
+				</div>
+
+				<!-- TOOLBAR -->
+				<div class="toolbar" id="toolbar">
+					<div class="date-group">
+						<label>📅 Date</label>
+						<input type="date" id="globalDate">
+					</div>
+					<div class="spacer"></div>
+					<button class="btn btn-ghost btn-drag" id="btnDragMode" onclick="toggleDragMode()">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-width="2">
+							<path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20" />
+						</svg>
+						Reorder Mode
+					</button>
+					<button class="btn btn-ghost" onclick="bulkPaste()">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-width="2">
+							<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+							<rect x="9" y="3" width="6" height="4" rx="1" />
+						</svg>
+						Bulk Paste
+					</button>
+					<button class="btn btn-amber" onclick="addRow()">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-width="2">
+							<line x1="12" y1="5" x2="12" y2="19" />
+							<line x1="5" y1="12" x2="19" y2="12" />
+						</svg>
+						Add Entry
+					</button>
+					<button class="btn btn-teal" onclick="submitAll()">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-width="2">
+							<polyline points="20 6 9 17 4 12" />
+						</svg>
+						Save Logs
+					</button>
+				</div>
+
+				<!-- BODY -->
+				<div class="body-layout">
+
+					<!-- GRID -->
+					<div class="grid-section">
+						<div class="drag-hint" id="dragHint">⠿ Drag the handle to reorder entries · Times recalculate
+							automatically</div>
+						<div class="grid-head">
+							<div class="col-head"></div>
+							<div class="col-head">Activity</div>
+							<div class="col-head">Request ID</div>
+							<div class="col-head">Ticket</div>
+							<div class="col-head">Start</div>
+							<div class="col-head">End</div>
+							<div class="col-head">Duration</div>
+							<div class="col-head">Fixed</div>
+							<div class="col-head">Notes</div>
+							<div class="col-head">Status</div>
+							<div class="col-head"></div>
+						</div>
+						<div class="log-rows" id="logRows"></div>
+					</div>
+
+					<!-- SIDEBAR -->
+					<div class="sidebar">
+						<div class="sidebar-title">Summary</div>
+
+						<div class="stat-card">
+							<div class="stat-label">Total Logged</div>
+							<div class="stat-value teal" id="sbTotal">0h 0m</div>
+						</div>
+
+						<div class="stat-row">
+							<span class="stat-row-label">Entries</span>
+							<span class="stat-row-value" id="sbCount">0</span>
+						</div>
+						<div class="stat-row">
+							<span class="stat-row-label">First Start</span>
+							<span class="stat-row-value" id="sbFirst">—</span>
+						</div>
+						<div class="stat-row">
+							<span class="stat-row-label">Last End</span>
+							<span class="stat-row-value" id="sbLast">—</span>
+						</div>
+
+						<div id="sbGap" class="gap-badge" style="display:none">
+							⚠ <span id="sbGapText">Gap detected</span>
+						</div>
+
+						<div class="sidebar-title" style="margin-top:4px">Validation</div>
+						<div id="sbValidation" class="val-badge ok"><span class="dot6"></span>All good</div>
+
+						<div class="sidebar-title" style="margin-top:4px">Auth</div>
+						<div class="token-info-chip">
+							<div class="token-info-chip-left">
+								<strong>Session Token</strong>
+								<span id="sidebarTokenPreview">—</span>
+							</div>
+							<button class="token-reset-btn" onclick="resetToken()">Change</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- FOOTER -->
+				<div class="footer">
+					<div class="save-status" id="saveStatus">Ready to save</div>
+					<button class="btn btn-ghost" onclick="clearAll()">Clear All</button>
+					<button class="btn btn-teal" onclick="submitAll()">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-width="2">
+							<polyline points="20 6 9 17 4 12" />
+						</svg>
+						Save All Logs
+					</button>
+				</div>
+
+			</div>
+		</div>
+
 	</div>
 
 	<div class="toast" id="toast"></div>
 
 	<script>
+		/* ══════════════════════════════════════════
+		   TOKEN MANAGEMENT
+		══════════════════════════════════════════ */
+		const TOKEN_KEY = 'ktt_session_token';
+
+		function getToken() {
+			return localStorage.getItem(TOKEN_KEY) || null;
+		}
+
+		function setToken(token) {
+			localStorage.setItem(TOKEN_KEY, token);
+		}
+
+		function clearToken() {
+			localStorage.removeItem(TOKEN_KEY);
+		}
+
+		function tokenPreview(token) {
+			if (!token) return '—';
+			return token.length > 24 ? token.slice(0, 12) + '…' + token.slice(-6) : token;
+		}
+
+		function saveToken() {
+			const val = document.getElementById('tokenInput').value.trim();
+			const errEl = document.getElementById('tokenError');
+			const errMsg = document.getElementById('tokenErrorMsg');
+
+			if (!val) {
+				errMsg.textContent = 'Please paste a valid token before saving.';
+				errEl.classList.add('show');
+				return;
+			}
+			if (val.length < 20) {
+				errMsg.textContent = 'Token looks too short — please paste the full JWT.';
+				errEl.classList.add('show');
+				return;
+			}
+
+			errEl.classList.remove('show');
+			setToken(val);
+			showToast('Token saved securely in browser storage', 'success');
+
+			// Refresh saved info badge
+			showSavedInfo(val);
+		}
+
+		function showSavedInfo(token) {
+			const info = document.getElementById('tokenSavedInfo');
+			const preview = document.getElementById('tokenSavedPreview');
+			info.classList.add('show');
+			preview.textContent = tokenPreview(token);
+		}
+
+		function proceedToApp() {
+			const token = getToken() || document.getElementById('tokenInput').value.trim();
+			const errEl = document.getElementById('tokenError');
+			const errMsg = document.getElementById('tokenErrorMsg');
+
+			if (!token || token.length < 20) {
+				errMsg.textContent = 'No token found. Paste your session token and hit Save first.';
+				errEl.classList.add('show');
+				return;
+			}
+
+			// If they typed but didn't save yet, save now
+			if (!getToken()) setToken(token);
+
+			errEl.classList.remove('show');
+			launchApp();
+		}
+
+		function resetToken() {
+			clearToken();
+			// Go back to token screen
+			document.getElementById('appScreen').style.display = 'none';
+			document.getElementById('tokenScreen').style.display = 'flex';
+			document.getElementById('tokenInput').value = '';
+			document.getElementById('tokenSavedInfo').classList.remove('show');
+			showToast('Token cleared — paste a new one', 'success');
+		}
+
+		function launchApp() {
+			document.getElementById('tokenScreen').style.display = 'none';
+			document.getElementById('appScreen').style.display = 'block';
+
+			// Show token preview in sidebar
+			const token = getToken();
+			document.getElementById('sidebarTokenPreview').textContent = tokenPreview(token);
+
+			// Init app if first time
+			if (!appInitialized) initApp();
+		}
+
+		/* ══════════════════════════════════════════
+		   INIT: Check token on load
+		══════════════════════════════════════════ */
+		window.addEventListener('DOMContentLoaded', () => {
+			const token = getToken();
+			if (token) {
+				// Token exists → show saved info and allow quick continue
+				showSavedInfo(token);
+				document.getElementById('tokenInput').value = token;
+				// Auto-proceed to app
+				launchApp();
+			} else {
+				// No token → stay on token screen
+				document.getElementById('tokenScreen').style.display = 'flex';
+				document.getElementById('appScreen').style.display = 'none';
+			}
+		});
+
+		/* ══════════════════════════════════════════
+		   MAIN APP LOGIC
+		══════════════════════════════════════════ */
 		const LOG_TYPES = [
 			"Analysis", "Break", "Bug Fix", "Code Review", "Coding", "Data Fix",
 			"DevOps", "Client Meeting", "Documentation", "Emails", "Interview",
@@ -954,15 +1352,17 @@
 		let rowCounter = 0;
 		let dragMode = false;
 		let dragSrcId = null;
+		let appInitialized = false;
 
-		// Set today's date
-		const today = new Date();
-		document.getElementById('globalDate').value = today.toISOString().split('T')[0];
-		document.getElementById('globalDate').addEventListener('change', updateMeta);
-		updateMeta();
+		function initApp() {
+			appInitialized = true;
 
-		// Init with one row
-		addRow();
+			const today = new Date();
+			document.getElementById('globalDate').value = today.toISOString().split('T')[0];
+			document.getElementById('globalDate').addEventListener('change', updateMeta);
+			updateMeta();
+			addRow();
+		}
 
 		// ROW CREATION
 		function addRow(afterId = null, cloneData = null) {
@@ -980,13 +1380,11 @@
     <div><select class="cell-input activity">${options}</select></div>
     <div><input type="text" class="cell-input req-id" placeholder="REQ-0000"></div>
     <div><input type="text" class="cell-input ticket" placeholder="TKT-0000"></div>
-      <div style="display:flex;align-items:center;gap:5px;">
-      <input type="time" class="cell-input start-time" style="flex:1;min-width:0;">
-      <span class="ampm-badge start-ampm">—</span>
+    <div class="time-cell">
+      <input type="time" class="cell-input start-time">
     </div>
-    <div style="display:flex;align-items:center;gap:5px;">
-      <input type="time" class="cell-input end-time" style="flex:1;min-width:0;">
-      <span class="ampm-badge end-ampm">—</span>
+    <div class="time-cell">
+      <input type="time" class="cell-input end-time">
     </div>
     <div class="duration-badge dur-display">—</div>
     <div class="toggle-wrap"><label class="toggle"><input type="checkbox" class="fixed-dur" checked><span class="toggle-slider"></span></label></div>
@@ -1002,7 +1400,6 @@
     </div>
   `;
 
-			// Clone data
 			if (cloneData) {
 				row.querySelector('.activity').value = cloneData.activity;
 				row.querySelector('.req-id').value = cloneData.reqId;
@@ -1016,45 +1413,29 @@
 			const container = document.getElementById('logRows');
 			if (afterId) {
 				const afterEl = container.querySelector(`[data-id="${afterId}"]`);
-				if (afterEl && afterEl.nextSibling) {
-					container.insertBefore(row, afterEl.nextSibling);
-				} else {
-					container.appendChild(row);
-				}
+				if (afterEl && afterEl.nextSibling) container.insertBefore(row, afterEl.nextSibling);
+				else container.appendChild(row);
 			} else {
 				container.appendChild(row);
 			}
 
-			// Auto-start time from prev row
 			if (!cloneData) {
 				const rows = getAllRows();
 				const idx = rows.indexOf(row);
 				if (idx > 0) {
-					const prev = rows[idx - 1];
-					const prevEnd = prev.querySelector('.end-time').value;
+					const prevEnd = rows[idx - 1].querySelector('.end-time').value;
 					if (prevEnd) row.querySelector('.start-time').value = prevEnd;
 				}
 			}
 
-			// Events
-			// Events
-			function refreshAmPm(input, badgeClass) {
-				const badge = row.querySelector(badgeClass);
-				if (!input.value) { badge.textContent = '—'; badge.className = 'ampm-badge'; return; }
-				const h = parseInt(input.value.split(':')[0], 10);
-				const ap = h >= 12 ? 'PM' : 'AM';
-				badge.textContent = ap;
-				badge.className = 'ampm-badge' + (ap === 'PM' ? ' pm' : '');
-			}
 			const startInput = row.querySelector('.start-time');
 			const endInput = row.querySelector('.end-time');
-			startInput.addEventListener('change', () => { refreshAmPm(startInput, '.start-ampm'); onTimeChange(row); });
-			endInput.addEventListener('change', () => { refreshAmPm(endInput, '.end-ampm'); onTimeChange(row); });
+			startInput.addEventListener('change', () => { onTimeChange(row); });
+			endInput.addEventListener('change', () => { onTimeChange(row); });
 			row.querySelector('.fixed-dur').addEventListener('change', () => updateDurations());
 			row.querySelector('.activity').addEventListener('change', () => validateRow(row));
 			row.querySelector('.ticket').addEventListener('input', () => validateRow(row));
 
-			// Drag events
 			const handle = row.querySelector('.drag-handle');
 			handle.addEventListener('dragstart', onDragStart);
 			row.addEventListener('dragover', onDragOver);
@@ -1103,10 +1484,8 @@
 		function onTimeChange(changedRow) {
 			const rows = getAllRows();
 			const idx = rows.indexOf(changedRow);
-			// Recalc all subsequent rows with fixedDuration
 			for (let i = idx + 1; i < rows.length; i++) {
-				const prev = rows[i - 1];
-				const cur = rows[i];
+				const prev = rows[i - 1], cur = rows[i];
 				const isFixed = cur.querySelector('.fixed-dur').checked;
 				const fixedMins = cur.dataset.fixedMins ? parseInt(cur.dataset.fixedMins) : null;
 				const prevEnd = prev.querySelector('.end-time').value;
@@ -1123,9 +1502,7 @@
 			getAllRows().forEach(row => {
 				const d = getDurMins(row);
 				row.querySelector('.dur-display').textContent = d != null ? formatDur(d) : '—';
-				if (row.querySelector('.fixed-dur').checked && d != null) {
-					row.dataset.fixedMins = d;
-				}
+				if (row.querySelector('.fixed-dur').checked && d != null) row.dataset.fixedMins = d;
 			});
 			updateSummary();
 			updateMeta();
@@ -1159,7 +1536,6 @@
 			validateAll();
 		}
 
-		// SUMMARY
 		function updateSummary() {
 			const rows = getAllRows();
 			let totalMins = 0, firstStart = null, lastEnd = null, errCount = 0;
@@ -1178,7 +1554,6 @@
 			document.getElementById('sbFirst').textContent = firstStart ? to12(firstStart) : '—';
 			document.getElementById('sbLast').textContent = lastEnd ? to12(lastEnd) : '—';
 
-			// Gap check
 			const gapEl = document.getElementById('sbGap');
 			let hasGap = false;
 			for (let i = 1; i < rows.length; i++) {
@@ -1187,14 +1562,11 @@
 				if (prevEnd && curStart && prevEnd !== curStart) {
 					hasGap = true;
 					const gapMins = toMins(curStart) - toMins(prevEnd);
-					if (gapMins > 0) {
-						document.getElementById('sbGapText').textContent = `Gap of ${formatDur(gapMins)} between entries`;
-					}
+					if (gapMins > 0) document.getElementById('sbGapText').textContent = `Gap of ${formatDur(gapMins)} between entries`;
 				}
 			}
 			gapEl.style.display = hasGap ? 'flex' : 'none';
 
-			// Validation badge
 			const valEl = document.getElementById('sbValidation');
 			if (errCount === 0) {
 				valEl.className = 'val-badge ok';
@@ -1254,22 +1626,17 @@
 			const container = document.getElementById('logRows');
 			const allRows = getAllRows();
 			const srcRow = allRows.find(r => r.dataset.id === dragSrcId);
-			const tgtRow = targetRow;
-
-			// Save duration of each row before move
 			const durMap = {};
 			allRows.forEach(r => { durMap[r.dataset.id] = getDurMins(r); });
 
-			container.insertBefore(srcRow, tgtRow);
-
-			// Recalculate times preserving durations
+			container.insertBefore(srcRow, targetRow);
 			recalcAllTimes(durMap);
 			allRows.forEach(r => r.classList.remove('drag-over', 'dragging'));
 			updateAll();
 			showToast('Entries reordered · Times recalculated', 'success');
 		}
 
-		function onDragEnd(e) {
+		function onDragEnd() {
 			getAllRows().forEach(r => r.classList.remove('dragging', 'drag-over'));
 			dragSrcId = null;
 		}
@@ -1277,8 +1644,7 @@
 		function recalcAllTimes(durMap) {
 			const rows = getAllRows();
 			for (let i = 1; i < rows.length; i++) {
-				const prev = rows[i - 1];
-				const cur = rows[i];
+				const prev = rows[i - 1], cur = rows[i];
 				const prevEnd = prev.querySelector('.end-time').value;
 				if (!prevEnd) continue;
 				const d = durMap[cur.dataset.id];
@@ -1288,11 +1654,9 @@
 				} else {
 					cur.querySelector('.start-time').value = prevEnd;
 				}
-				// refresh AM/PM badges after recalc
 				['.start-time', '.end-time'].forEach(sel => {
 					const inp = cur.querySelector(sel);
-					const badgeSel = sel === '.start-time' ? '.start-ampm' : '.end-ampm';
-					const badge = cur.querySelector(badgeSel);
+					const badge = cur.querySelector(sel === '.start-time' ? '.start-ampm' : '.end-ampm');
 					if (!badge) return;
 					if (!inp.value) { badge.textContent = '—'; badge.className = 'ampm-badge'; return; }
 					const h = parseInt(inp.value.split(':')[0], 10);
@@ -1365,8 +1729,14 @@
 		}
 
 		// SUBMIT
-		// SUBMIT
 		async function submitAll() {
+			const token = getToken();
+			if (!token) {
+				showToast('No session token — redirecting to setup', 'error');
+				setTimeout(() => resetToken(), 1200);
+				return;
+			}
+
 			const dateRaw = document.getElementById('globalDate').value;
 			if (!dateRaw) { showToast('Please select a date', 'error'); return; }
 			const [y, mo, d] = dateRaw.split('-');
@@ -1380,13 +1750,11 @@
 				return;
 			}
 
-			// Build valid log list with row references
 			const validLogs = rows.map(row => {
 				const valCell = row.querySelector('.val-display');
 				valCell.innerHTML = `<span style="color:var(--text-muted);font-size:11px;">Sending…</span>`;
 				return {
-					row,
-					valCell,
+					row, valCell,
 					data: {
 						activity: row.querySelector('.activity').value,
 						requestId: row.querySelector('.req-id').value,
@@ -1407,31 +1775,37 @@
 			for (const item of validLogs) {
 				const { row, valCell, data } = item;
 				try {
-					const response = await fetch('https://crm.ktt.io:8443/api/crmworklogs/', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-							'X-AT-SessionToken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDU5LCJudW1iZXIiOiI0NTEiLCJmaXJzdE5hbWUiOiJBbmJhcmFzdSIsImxhc3ROYW1lIjoiUyBUIiwiZGVwYXJ0bWVudCI6IklUIiwicm9sZSI6IlVzZXIiLCJkZXNpZ25hdGlvbiI6IkZ1bGwgU3RhY2sgRGV2ZWxvcGVyIiwidXNlcm5hbWUiOiJBbmJhcmFzdSIsImJyYW5jaCI6IkNvaW1iYXRvcmUiLCJzdGF0dXMiOiJBY3RpdmUiLCJmYXN0YWdBZ2VudElkIjpudWxsLCJzZWNvbmRhcnlCcmFuY2hlcyI6W10sImFjY2VzcyI6eyJleHRyYXMiOnsiaXQvcXVlcnkiOnRydWV9LCJwaW5uZWQiOltdfSwib2ZmaWNlUGhvbmUiOiIiLCJwZXJzb25hbFBob25lIjoiODc1NDYwNDIzMCIsImNkblVybCI6Imh0dHBzOi8vY3JtLWluLmt0dC5pbzo4NDQzL2FwaS91cGxvYWQvZmlsZSIsImNkblVybEFUIjoiaHR0cHM6Ly9hcHAua3R0LmlvL2FwaS91cGxvYWQvZmlsZSIsImlhdCI6MTc4MTU4ODAzNH0.qmCEprYWR2QYb6B8m_eYBg4Yu3n_EJZYyaqo9-VLbOs',
-							'X-Requested-With': 'XMLHttpRequest'
-						},
-						body: new URLSearchParams(data)
-					});
-					const result = await response.json();
+					const response = await axios.post(
+						'https://crm.ktt.io:8443/api/crmworklogs/',
+						new URLSearchParams(data),
+						{
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+								'X-AT-SessionToken': token,
+								'X-Requested-With': 'XMLHttpRequest'
+							}
+						}
+					);
 
-					if (result?.success) {
+					if (response.data?.success) {
 						successCount++;
 						document.getElementById('saveStatus').textContent = `Saving ${successCount} / ${validLogs.length}…`;
-						// Animate row out then remove
 						row.style.transition = 'all 0.3s ease';
 						row.style.opacity = '0';
 						row.style.transform = 'translateX(20px)';
 						setTimeout(() => { row.remove(); updateAll(); }, 300);
 					} else {
-						const errMsg = result?.error || 'Server rejected this log';
+						const errMsg = response.data?.error || 'Server rejected this log';
 						valCell.innerHTML = `<span class="val-err" title="${errMsg}">${errMsg}</span>`;
 					}
 				} catch (err) {
 					console.error('API error:', err);
+					// If 401/403 → token likely expired, redirect to token screen
+					if (err.response?.status === 401 || err.response?.status === 403) {
+						showToast('Session expired — please update your token', 'error');
+						setTimeout(() => resetToken(), 1500);
+						return;
+					}
 					const errMsg = err.response?.data?.error || 'Network error, try again';
 					valCell.innerHTML = `<span class="val-err" title="${errMsg}">${errMsg}</span>`;
 				}
@@ -1440,7 +1814,6 @@
 			if (successCount === validLogs.length) {
 				document.getElementById('saveStatus').textContent = `✓ All ${successCount} logs saved`;
 				showToast(`${successCount} work logs saved successfully`, 'success');
-				// If all rows removed, add a fresh one
 				setTimeout(() => { if (getAllRows().length === 0) addRow(); }, 350);
 			} else {
 				const failed = validLogs.length - successCount;
